@@ -15,25 +15,3 @@ def connect_db() -> object:
             ) as connection:
         
         return connection
-
-"""
-def connect_db():
-    try:
-        conn = psycopg2.connect(
-            dbname = 'postgres',
-            user = 'postgres',
-            password = 'kk452880',
-            host = 'localhost',
-            port = 5432
-            
-        )
-        return conn
-    
-    except psycopg2.Error as e:
-        print(f"An error occured while connection to db: {e}")
-        return None
-    
-    except Exception as e:
-        print(f"An unexpected error occured [e]")
-        return None
-"""
