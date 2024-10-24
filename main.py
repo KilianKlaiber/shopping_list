@@ -28,3 +28,5 @@ with database.connect_db() as connection:
                 
             cursor.execute(insert_query)
             connection.commit()
+
+
