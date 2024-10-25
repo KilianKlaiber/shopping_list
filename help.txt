@@ -1,0 +1,15 @@
+# Create or update the reguirements file:
+
+pip freeze > reguirements.txt
+
+
+# Loading dotenv  for hiding password
+
+1. Store PASSWORD in .env file
+
+2. 
+from dotenv import load_dotenv
+import os
+
+PASSWORD = os.getenv('PASSWORD')
+print(PASSWORD)
