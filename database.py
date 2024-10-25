@@ -7,7 +7,7 @@ PASSWORD = os.getenv('PASSWORD')
 
 def main():
     
-    create_grocery_table('beans')
+    insert_image()
 
 
 def connect_db() -> object:

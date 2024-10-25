@@ -9,8 +9,18 @@ def get(path: str) -> bytes:
         binary_data = file.read()
         return binary_data
 
-def store(image: bytes) -> None:
+def store(file: str, image: bytes) -> None:
+    """Store binary data to file
     
+    THe image is converted into jpeg and stored in file.jpg
+
+    Args:
+        file (str): Name of the file
+        image (bytes): variable holding the image as bytes
+    """
+    with open(file, 'wb') as file:
+        output_file_path = f"{file}.jpg"
+        file.write(image)
 
 if __name__ == "__main__":
     main()
