@@ -5,6 +5,15 @@ def main():
     print(type(data))
 
 def get(path: str) -> bytes:
+    """getting image from file
+    The image.jpg is loaded and returned as bytes
+
+    Args:
+        path (str): path to the image, e.g. /image.py
+
+    Returns:
+        bytes: Content of the loaded file
+    """
     with open(path, 'rb') as file:
         binary_data = file.read()
         return binary_data
