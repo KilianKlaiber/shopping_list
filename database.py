@@ -41,6 +41,13 @@ def create_grocery_table(grocery):
         cursor.execute(SQL_Query)
         connection.commit()
  
+def insert_image(grocery: str, grocery_id: str, image: bytes):
+    with connect_db() as connection:
+        cursor = connection.cursor()
+        
+        SQL_query = f"UPDATE {grocery} SET image = %s WHERE {grocery}_id = %s"
+        cursor.execute(SQL_query, (psycopg2.Binary(image), grocery_id))
+        connection.commit()
 
 if __name__ == "__main__":
     main()
