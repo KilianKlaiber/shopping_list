@@ -12,6 +12,7 @@ import os
 
 PASSWORD = os.getenv('PASSWORD')
 
-# This is not necessary:
-from dotenv import load_dotenv
-load_dotenv()
+
+# Connecting to the postgres server in the terminal
+
+ psql -h localhost -U postgres
