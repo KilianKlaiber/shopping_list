@@ -8,7 +8,9 @@ PASSWORD = os.getenv("PASSWORD")
 
 def main():
 
-    pass
+    id = get_id("Apple")
+    
+    print(id)
 
 
 def connect_db() -> object:
@@ -27,6 +29,30 @@ def connect_db() -> object:
     ) as connection:
 
         return connection
+
+
+
+def get_id(grocery: str) -> int | None:
+    """
+    Retrieve the id of a particular grocery from products table
+    Return None if grocery not in products table
+
+    Args:
+        grocery (str): Name of the grocery
+    """
+
+    with connect_db() as connection:
+        cursor = connection.cursor()
+
+        cursor.execute(f"SELECT id FROM products WHERE name = '{grocery}'")
+        result = cursor.fetchall()
+
+        if result == []:
+            return None
+        else:
+
+            return result[0][0]
+
 
 
 def create_grocery_table(grocery: str) -> None:
@@ -50,24 +76,33 @@ def create_grocery_table(grocery: str) -> None:
         grocery (str): Name of the grocery (table)
 
     """
+    
+    id = get_id(grocery)
+    
+    if id == None:
+        print(f"{grocery} is not listed in the products table. Insert {grocery} into product table prior to creating grocery table.")
+        print("The table cannot be created.")
+    
+    else:
+        
+        with connect_db() as connection:
+            cursor = connection.cursor()
+            
 
-    with connect_db() as connection:
-        cursor = connection.cursor()
+            SQL_Query = f"""CREATE TABLE IF NOT EXISTS {grocery} (
+                    {grocery}_id serial PRIMARY KEY,
+                    product_id integer REFERENCES products(id),
+                    name VARCHAR(100) NOT NULL,
+                    brand VARCHAR(100) NOT NULL,
+                    amount FLOAT NOT NULL,
+                    measure VARCHAR(100) NOT NULL,
+                    price FLOAT NOT NULL,
+                    cost_amount_ratio FLOAT NOT NULL,
+                    description TEXT,
+                    image BYTEA);"""
 
-        SQL_Query = f"""CREATE TABLE IF NOT EXISTS {grocery} (
-                {grocery}_id serial PRIMARY KEY,
-                product_id integer REFERENCES products(id),
-                name VARCHAR(100) NOT NULL,
-                brand VARCHAR(100) NOT NULL,
-                amount FLOAT NOT NULL,
-                measure VARCHAR(100) NOT NULL,
-                price FLOAT NOT NULL,
-                cost_amount_ratio FLOAT NOT NULL,
-                description TEXT,
-                image BYTEA);"""
-
-        cursor.execute(SQL_Query)
-        connection.commit()
+            cursor.execute(SQL_Query)
+            connection.commit()
 
 
 def insert_image(grocery: str, grocery_id: str, image: bytes):
@@ -114,23 +149,24 @@ def insert_grocery(
 ) -> None:
 
     cost_amount_ratio = round(price / amount, 2)
+    id = get_id(grocery_table)
 
     SQL_Query = f"""
     INSERT INTO {grocery_table} (
-        grocery_name,
+        product_id
+        name,
         brand,
         amount,
         measure,
         price,
-        cost_amount_ratio,
-        description) VALUES (%s, %s, %s, %s, %s, %s);
+        cost_amount_ratio) VALUES (%s, %s, %s, %s, %s, %s);
         """
 
     with connect_db() as connection:
         cursor = connection.cursor()
         cursor.execute(
             SQL_Query,
-            (grocery_name, brand, amount, measure, price, cost_amount_ratio),
+            (id, grocery_name, brand, amount, measure, price, cost_amount_ratio),
         )
         connection.commit()
 
@@ -168,7 +204,7 @@ def insert_grocery(
             # Result is a list of tuples with a single item
             grocery_id = results[0][0]
         
-        insert_description(grocery_table, grocery_id, image)
+        insert_description(grocery_table, grocery_id, description)
 
 if __name__ == "__main__":
     main()

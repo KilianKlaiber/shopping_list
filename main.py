@@ -3,30 +3,51 @@ import database
 
 # Create a database of grocery products:
 
-with database.connect_db() as connection:
-    cursor = connection.cursor()
-    SQL_Query = """ CREATE TABLE IF NOT EXISTS products(
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(100) UNIQUE NOT NULL,
-        category VARCHAR(100),
-        description TEXT
-    )
+
+def main():
+
+    id = get_id("Gut")
+
+    print(id)
+
+
+def get_id(grocery: str) -> int | None:
     """
-    cursor.execute(SQL_Query)
-    connection.commit()
-    
+    Retrieve the id of a particular grocery from products table
+    Return None if grocery not in prodcuts table
 
-# Enter Groceries from csv-file into database
+    Args:
+        grocery (str): Name of the grocery
+    """
 
-with database.connect_db() as connection:
-    cursor = connection.cursor()
-    with open('groceries_list.csv','r') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            insert_query = f"""INSERT INTO products(name, category, description)
-            VALUES ('{row['Item']}','{row['Type']}','{row['Description']}')"""
-                
-            cursor.execute(insert_query)
-            connection.commit()
+    with database.connect_db() as connection:
+        cursor = connection.cursor()
+
+        cursor.execute(f"SELECT id FROM products WHERE name = '{grocery}'")
+        result = cursor.fetchall()
+
+        if result == []:
+            return None
+        else:
+
+            return result[0][0]
 
 
+main()
+""" 
+database.create_grocery_table('Banana')
+
+
+description =  "Chiquita bananas are known for their bright yellow skin, slightly curved shape, and consistent quality." \
+    "They’re usually sweet, creamy, and soft when ripe, making them ideal for snacking, baking, and smoothies."
+
+database.insert_grocery(
+    grocery_table="Banana",
+    grocery_name="Chiquita Banana",
+    brand="Chiquita", 
+    amount=1.5, 
+    measure="Kg", 
+    price=1.7,
+   )
+
+ """
