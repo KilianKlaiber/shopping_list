@@ -143,10 +143,8 @@ def insert_grocery(
     brand: str,
     amount: float,
     measure: str,
-    price: float,
-    description: str = None,
-    image: bytes = None,
-) -> None:
+    price: float
+    ) -> None:
 
     cost_amount_ratio = round(price / amount, 2)
     id = get_id(grocery_table)
@@ -159,7 +157,7 @@ def insert_grocery(
         amount,
         measure,
         price,
-        cost_amount_ratio) VALUES (%s, %s, %s, %s, %s, %s);
+        cost_amount_ratio) VALUES (%s, %s, %s, %s, %s, %s, %s);
         """
 
     with connect_db() as connection:
@@ -170,41 +168,6 @@ def insert_grocery(
         )
         connection.commit()
 
-    # Inset an image, if it exists:
-    if image != None:
-        
-        # Retrieve the ID of the product
-        SQL_Query = f"""
-        SELECT {grocery_table}_id
-        FROM grocery_table
-        WHERE grocery_name = {grocery_name} AND brand = {brand};"""
-        
-        with connect_db() as connection:
-            cursor = connection.cursor()
-            cursor.execute(SQL_Query)
-            results = cursor.fetchall()
-            # Result is a list of tuples with a single item
-            grocery_id = results[0][0]
-        
-        insert_image(grocery_table, grocery_id, image)
-    
-    # Insert a description, if it exists:
-    if description != None:
-        
-        # Retrieve the ID of the product
-        SQL_Query = f"""
-        SELECT {grocery_table}_id
-        FROM grocery_table
-        WHERE grocery_name = {grocery_name} AND brand = {brand};"""
-        
-        with connect_db() as connection:
-            cursor = connection.cursor()
-            cursor.execute(SQL_Query)
-            results = cursor.fetchall()
-            # Result is a list of tuples with a single item
-            grocery_id = results[0][0]
-        
-        insert_description(grocery_table, grocery_id, description)
 
 if __name__ == "__main__":
     main()
