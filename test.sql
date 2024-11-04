@@ -1,2 +1,6 @@
 
-SELECT * FROM products WHERE name = 'Banana'
+
+  
+UPDATE potato
+SET product_id = 3
+

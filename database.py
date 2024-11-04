@@ -98,6 +98,7 @@ def create_grocery_table(grocery: str) -> None:
                     measure VARCHAR(100) NOT NULL,
                     price FLOAT NOT NULL,
                     cost_amount_ratio FLOAT NOT NULL,
+                    UNIQUE (name, brand),
                     description TEXT,
                     image BYTEA);"""
 
@@ -151,7 +152,7 @@ def insert_grocery(
 
     SQL_Query = f"""
     INSERT INTO {grocery_table} (
-        product_id
+        product_id,
         name,
         brand,
         amount,
