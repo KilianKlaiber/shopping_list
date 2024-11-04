@@ -9,7 +9,7 @@ PASSWORD = os.getenv("PASSWORD")
 def main():
 
     id = get_id("Apple")
-    
+
     print(id)
 
 
@@ -30,6 +30,23 @@ def connect_db() -> object:
 
         return connection
 
+
+def get_availabe_groceries():
+
+    with connect_db() as connection:
+        SQL_Query = "SELECT name FROM products"
+        cursor = connection.cursor()
+
+        cursor.execute(SQL_Query)
+        groceries = cursor.fetchall()
+
+        list_of_groceries = []
+        for grocerie in groceries:
+            grocerie = grocerie[0].lower()
+
+            list_of_groceries.append(grocerie)
+
+    return list_of_groceries
 
 
 def get_id(grocery: str) -> int | None:
@@ -54,12 +71,11 @@ def get_id(grocery: str) -> int | None:
             return result[0][0]
 
 
-
 def create_grocery_table(grocery: str) -> None:
     """Create a table for groceries, such as apples
-    
+
     The grocery table comprises the following columns:
-    
+
     product_id: 1
     name: Granny Smith,
     brand: Elbe Obst,
@@ -68,26 +84,27 @@ def create_grocery_table(grocery: str) -> None:
     price: 5,
     cost_amount_ratio: 0.01,
     description: 'The Granny Smith, also known as a green apple or sour apple, is an apple cultivar that originated in Australia in 1868.'
-    image: 
-    
+    image:
+
 
 
     Args:
         grocery (str): Name of the grocery (table)
 
     """
-    
+
     id = get_id(grocery)
-    
+
     if id == None:
-        print(f"{grocery} is not listed in the products table. Insert {grocery} into product table prior to creating grocery table.")
+        print(
+            f"{grocery} is not listed in the products table. Insert {grocery} into product table prior to creating grocery table."
+        )
         print("The table cannot be created.")
-    
+
     else:
-        
+
         with connect_db() as connection:
             cursor = connection.cursor()
-            
 
             SQL_Query = f"""CREATE TABLE IF NOT EXISTS {grocery} (
                     {grocery}_id serial PRIMARY KEY,
@@ -144,8 +161,8 @@ def insert_grocery(
     brand: str,
     amount: float,
     measure: str,
-    price: float
-    ) -> None:
+    price: float,
+) -> None:
 
     cost_amount_ratio = round(price / amount, 2)
     id = get_id(grocery_table)
