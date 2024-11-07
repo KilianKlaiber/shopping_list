@@ -108,7 +108,7 @@ def create_grocery_table(grocery: str) -> None:
 
             SQL_Query = f"""CREATE TABLE IF NOT EXISTS {grocery} (
                     {grocery}_id serial PRIMARY KEY,
-                    product_id integer REFERENCES products(id),
+                    product_id integer REFERENCES products(id) ON DELETE SET NULL,
                     name VARCHAR(100) NOT NULL,
                     brand VARCHAR(100) NOT NULL,
                     amount FLOAT NOT NULL,

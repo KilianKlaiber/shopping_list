@@ -2,99 +2,67 @@ import PySimpleGUI as psg
 import database
 import shopping
 
-# -create pop up window:
-""" 
-layout = [[psg.Text(
-    text="Create your Shopping List",
-    font=('Calibri', 20),
-    expand_x=True,
-    justification = 'center'
-           )]]
 
-window = psg.Window("Create your Shopping List", layout, size=(500,250))
 
-while True:
-    event, values = window.read()
+
+from screeninfo import get_monitors
+import time
+
+# Get the width of the primary monitor (or specify a different monitor if needed)
+primary_monitor = get_monitors()[0]  # You can change the index to select a different monitor
+monitor_width = primary_monitor.width
+monitor_height = primary_monitor.height
+
+# Define the layout of the window
+
+headings = ["Grocery", "Name", "Brand", "Price/Kg"]
+
+layout = [
+    [psg.Column([[psg.Text(heading, size=(15, 1), justification="center")
+                 for heading in headings]], 
+                element_justification="center", expand_x=True)],
+    [psg.Column([[psg.Text("Live Data:", key="data_text", size=(20, 1), justification="center")]], 
+                element_justification="center", expand_x=True)],
+    [psg.Column([[psg.Button("Add grocery"), psg.Button("Exit")]], 
+                element_justification="center", expand_x=True)],
     
-    print(event, values)
     
-    if event in (None, 'Exit'):
-        break
-
-window.close() """
-
-
-# Creat text element:
-
-""" grocery = psg.popup_get_text('What do you want?', title=' Buy grocery')
-print('The product is: ',  grocery)
-
-amount = psg.popup_get_text('How much do you want? (Kg)', title=f'Amount of {grocery}')
-print(f'The amount is. {amount} Kg')
-
-grocery = "Papaya"
-
-ch = psg.popup_yes_no(f"We do not have {grocery}.\n Would you like something else?", title= 'Alternative?')
-
-
- """
- 
- # Text and input Layout
- 
-""" layout = [
-    [psg.Text('Granny Smith'), psg.OK()],
-    [psg.Text('Forländer'), psg.OK()],
-    [psg.Text('Timtin'), psg.OK()],
-    [psg.Exit()]
- ]
- 
-window = psg.Window('Shopping List', layout)
- 
-while True:
-     event = window.read()
-     print(event)
-     
-     if event == psg.WIN_CLOSED or event in ['OK', 'OK0', 'OK1']:
-         break
-
-window.close() """
-
-
-import PySimpleGUI as sg
-
-
-grocery_list = shopping.get_grocery('Apple')
-
-# Sample data for the table
-data = [
-    list(grocery_list[0]),
-    list(grocery_list[1]),
-    list(grocery_list[2])
 ]
 
-# Table headings
-headings = ["Name", "Brand", "Price/Kg"]
+# Create the window with the screen width
+window = psg.Window(
+    "Create Your shopping list:", 
+    layout, 
+    size=(monitor_width, monitor_height),  # Set height as needed
+    finalize=True
+)
 
-# Define the layout
-layout = [[sg.Text(heading, size=(15, 1), justification='center') for heading in headings]]  # Header row
+# Simulated function to get data
+def get_data():
+    # Replace this with actual data-fetching code
+    return shopping.shopping_list
 
-for i, row in enumerate(data):
-    row_layout = [
-        sg.Text(row[0], size=(15, 1), justification='left'),
-        sg.Text(row[1], size=(15, 1), justification='left'),
-        sg.Text(row[2], size=(15, 1), justification='centre'),
-        sg.Button("OK", key=f"OK_{i}")  # Unique key for each button
-    ]
-    layout.append(row_layout)
-
-# Create the window
-window = sg.Window("Chose your grocery", layout)
-
-# Event loop
+# Event loop to update the window
 while True:
-    event, values = window.read()
-    print(event)
-    if event == sg.WINDOW_CLOSED or event in ["OK_0", "OK_1", "OK_2"]:
+    # Check for events like button clicks
+    event, values = window.read(timeout=100)  # Timeout in milliseconds
+    
+    print("event:", event)
+    # event: Add grocery
+    
+    print("values", values)
+
+    if event == "Add grocery":
+        shopping.create_shopping_list()
+    # If the user closes the window or clicks "Exit", exit the loop
+    if event == psg.WINDOW_CLOSED or event == "Exit":
         break
 
+    # Get new data
+    data = get_data()
+
+    # Update the window with the new data
+    window["data_text"].update(f"Live Data: {data}")
+
+# Close the window when the loop is done
 window.close()
