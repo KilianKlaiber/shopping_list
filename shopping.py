@@ -3,13 +3,13 @@ import PySimpleGUI as psg
 
 
 def main():
-    create_shopping_list()
+    result = create_shopping_list()
+    print(result)
 
-shopping_list = []
 
 def create_shopping_list() -> list:
 
-    global shopping_list
+    shopping_list = []
 
     decision = "yes"
 
@@ -38,13 +38,10 @@ def create_shopping_list() -> list:
             grocery_list = get_grocery(grocery)
 
             # Display Groceries in pop up window:
-
             # Sample data for the table
             data = [list(grocery_list[0]), list(grocery_list[1]), list(grocery_list[2])]
-
             # Table headings
             headings = ["Name", "Brand", "Price/Kg"]
-
             # Define the layout
             layout = [
                 [
@@ -74,8 +71,10 @@ def create_shopping_list() -> list:
             window.close()
 
             choice = int(event[-1])
-            
-            amount = float(psg.popup_get_text(f"How much {grocery} do you want? (in Kg)"))
+
+            amount = float(
+                psg.popup_get_text(f"How much {grocery} do you want? (in Kg)")
+            )
             price = amount * grocery_list[choice][2]
             grocery_list = list(grocery_list[choice])
             grocery_list.append(amount)
@@ -87,7 +86,6 @@ def create_shopping_list() -> list:
             )
 
             decision = decision.lower()
-            
 
             if decision == "no":
 
@@ -103,6 +101,7 @@ def create_shopping_list() -> list:
 def get_shopping_list():
     return shopping_list
 
+
 def get_grocery(grocery: str) -> list:
 
     with database.connect_db() as connection:
@@ -113,8 +112,6 @@ def get_grocery(grocery: str) -> list:
         result = cursor.fetchall()
 
         return result
-
-
 
 
 if __name__ == "__main__":

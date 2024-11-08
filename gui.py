@@ -1,12 +1,10 @@
+
 import PySimpleGUI as psg
-import database
 import shopping
 
 
 
-
 from screeninfo import get_monitors
-import time
 
 # Get the width of the primary monitor (or specify a different monitor if needed)
 primary_monitor = get_monitors()[0]  # You can change the index to select a different monitor
@@ -26,7 +24,6 @@ layout = [
     [psg.Column([[psg.Button("Add grocery"), psg.Button("Exit")]], 
                 element_justification="center", expand_x=True)],
     
-    
 ]
 
 # Create the window with the screen width
@@ -40,7 +37,7 @@ window = psg.Window(
 # Simulated function to get data
 def get_data():
     # Replace this with actual data-fetching code
-    return shopping.shopping_list
+    return "My Data"
 
 # Event loop to update the window
 while True:
@@ -49,17 +46,17 @@ while True:
     
     print("event:", event)
     # event: Add grocery
-    
-    print("values", values)
 
     if event == "Add grocery":
         shopping.create_shopping_list()
+        
     # If the user closes the window or clicks "Exit", exit the loop
     if event == psg.WINDOW_CLOSED or event == "Exit":
         break
 
     # Get new data
     data = get_data()
+    print(data)
 
     # Update the window with the new data
     window["data_text"].update(f"Live Data: {data}")
