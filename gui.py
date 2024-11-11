@@ -34,10 +34,7 @@ window = psg.Window(
     finalize=True
 )
 
-# Simulated function to get data
-def get_data():
-    # Replace this with actual data-fetching code
-    return "My Data"
+data = ""
 
 # Event loop to update the window
 while True:
@@ -48,18 +45,16 @@ while True:
     # event: Add grocery
 
     if event == "Add grocery":
-        shopping.create_shopping_list()
+        data = shopping.create_shopping_list()
         
     # If the user closes the window or clicks "Exit", exit the loop
     if event == psg.WINDOW_CLOSED or event == "Exit":
         break
-
-    # Get new data
-    data = get_data()
-    print(data)
 
     # Update the window with the new data
     window["data_text"].update(f"Live Data: {data}")
 
 # Close the window when the loop is done
 window.close()
+
+print(data)
