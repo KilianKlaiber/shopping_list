@@ -82,21 +82,7 @@ def create_shopping_list() -> list:
             grocery_list.insert(0, grocery)
             shopping_list.append(grocery_list)
 
-            decision = psg.popup_yes_no(
-                f"Would you like something else?", title="What Else?"
-            )
-
-            decision = decision.lower()
-
-            if decision == "no":
-
-                total_price = 0
-                for item in shopping_list:
-                    total_price += item[5]
-
-                total_price = round(total_price, 2)
-
-                return shopping_list, total_price
+            return shopping_list
 
 
 

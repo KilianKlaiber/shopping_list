@@ -68,7 +68,13 @@ while True:
     # event: Add grocery
 
     if event == "Add grocery":
-        shopping_list, total_price = shopping.create_shopping_list()
+        list = shopping.create_shopping_list()
+        shopping_list.extend(list)
+        total_price = 0
+        for item in shopping_list:
+            total_price += item[5]
+        
+        total_price = round(total_price,2)
         
     # If the user closes the window or clicks "Exit", exit the loop
     if event == psg.WINDOW_CLOSED or event == "Exit":
@@ -82,5 +88,3 @@ while True:
 
 # Close the window when the loop is done
 window.close()
-
-print(data)
