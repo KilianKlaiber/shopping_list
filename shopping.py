@@ -79,6 +79,7 @@ def create_shopping_list() -> list:
             grocery_list = list(grocery_list[choice])
             grocery_list.append(amount)
             grocery_list.append(price)
+            grocery_list.insert(0, grocery)
             shopping_list.append(grocery_list)
 
             decision = psg.popup_yes_no(
@@ -91,15 +92,12 @@ def create_shopping_list() -> list:
 
                 total_price = 0
                 for item in shopping_list:
-                    total_price += item[4]
+                    total_price += item[5]
 
                 total_price = round(total_price, 2)
 
                 return shopping_list, total_price
 
-
-def get_shopping_list():
-    return shopping_list
 
 
 def get_grocery(grocery: str) -> list:
