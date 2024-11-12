@@ -79,6 +79,11 @@ def create_shopping_list() -> list:
 
             amount = psg.popup_get_text(f"How much {grocery} do you want? (in Kg)")
             
+            while not is_decimal_number(amount):
+                if amount == None:
+                    break
+                amount = psg.popup_get_text(f"'{amount}' ist not a decimal number. How much {grocery} do you want? (in Kg)")
+            
             if amount != None:
                 amount = float(amount)
                 price = amount * grocery_list[choice][2]
@@ -87,6 +92,7 @@ def create_shopping_list() -> list:
                 grocery_list.append(price)
                 grocery_list.insert(0, grocery)
                 shopping_list.append(grocery_list)
+            
 
             return shopping_list
 
@@ -103,6 +109,17 @@ def get_grocery(grocery: str) -> list:
 
         return result
 
+
+def is_decimal_number(s):
+    
+    if s != None:
+        try:
+            float(s)
+            return True
+        except ValueError:
+            return False
+    else:
+        return False
 
 if __name__ == "__main__":
     main()
