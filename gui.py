@@ -136,10 +136,6 @@ while True:
         print("grocery", grocery)
         print("shopping list: ", shopping_list)
 
-    # If the user closes the window or clicks "Exit", exit the loop
-    if event == psg.WINDOW_CLOSED or event == "Exit":
-        break
-
     #if shopping_list != []:
         # Update the window with the new data
     window["shopping_table"].update(shopping_list)
@@ -147,6 +143,25 @@ while True:
     #if total_price != 0:
         # Update the total price display
     window["total_price_text"].update(f"{total_price} €")  # Format as currency
+    
+    # If the user clicks save and send
+    
+    if event == "Save and send shopping list":
+        # Writing to a text file with formatted columns
+        with open("table.txt", "w") as file:
+            shopping_list.insert(0,headings)
+            for row in shopping_list:
+                file.write("{:<10} {:<15} {:<25} {:<15} {:<15} {:<15} \n".format(*row))  # Left-align with specific widths
+            file.write(f"\nTotal Price: {total_price}")
+        
+        
+        
+        break
+    
+    # If the user closes the window or clicks "Exit", exit the loop
+    if event == psg.WINDOW_CLOSED or event == "Exit":
+        break
+
 
 # Close the window when the loop is done
 window.close()
@@ -155,17 +170,6 @@ window.close()
 
 # formatting a table for a text file.
 """
-# Sample list of lists (table)
-table = [
-    ["Name", "Age", "City"],
-    ["Alice", 30, "New York"],
-    ["Bob", 25, "San Francisco"],
-    ["Charlie", 35, "London"]
-]
-
-# Writing to a text file with formatted columns
-with open("table.txt", "w") as file:
-    for row in table:
-        file.write("{:<10} {:<5} {:<15}\n".format(*row))  # Left-align with specific widths
+["Grocery", "Name", "Brand", "Price / Kg", "Amount [Kg]", "Price [€]"]
 
 """

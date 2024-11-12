@@ -1,0 +1,5 @@
+Grocery    Name            Brand                     Price / Kg      Amount [Kg]     Price [€]       
+banana     Cavendish       Banana Grove              1.29            2.0             2.58            
+apple      Fuji            Apple Harvest             3.49            2.0             6.98            
+
+Total Price: 9.56
