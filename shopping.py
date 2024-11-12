@@ -15,12 +15,15 @@ def create_shopping_list() -> list:
 
     while decision == "yes":
         grocery = psg.popup_get_text("What do you want?", title=" Buy grocery")
-
-        grocery = grocery.lower()
+        
+        if grocery == None:
+            decision = "no"
+        else:
+            grocery = grocery.lower()
 
         groceries = database.get_availabe_groceries()
 
-        if grocery not in groceries:
+        if grocery not in groceries and grocery != None:
 
             decision = psg.popup_yes_no(
                 f"We do not have {grocery}\n Would you like something else?",
@@ -34,7 +37,7 @@ def create_shopping_list() -> list:
             else:
                 decision = "yes"
 
-        else:
+        elif grocery != None:
             grocery_list = get_grocery(grocery)
 
             # Display Groceries in pop up window:

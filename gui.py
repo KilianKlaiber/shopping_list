@@ -57,7 +57,7 @@ window = psg.Window(
 )
 
 shopping_list = []
-total_price = ""
+total_price = 0
 
 # Event loop to update the window
 while True:
@@ -69,22 +69,25 @@ while True:
 
     if event == "Add grocery":
         list = shopping.create_shopping_list()
-        shopping_list.extend(list)
-        total_price = 0
-        for item in shopping_list:
-            total_price += item[5]
-        
-        total_price = round(total_price,2)
-        
+        if list != None:
+            shopping_list.extend(list)
+            total_price = 0
+            for item in shopping_list:
+                total_price += item[5]
+            
+            total_price = round(total_price,2)
+            
     # If the user closes the window or clicks "Exit", exit the loop
     if event == psg.WINDOW_CLOSED or event == "Exit":
         break
-
-    # Update the window with the new data
-    window["shopping_table"].update(shopping_list)
     
-    # Update the total price display
-    window["total_price_text"].update(f"{total_price} €")  # Format as currency
+    if shopping_list != []:
+        # Update the window with the new data
+        window["shopping_table"].update(shopping_list)
+    
+    if total_price != 0:
+        # Update the total price display
+        window["total_price_text"].update(f"{total_price} €")  # Format as currency
 
 # Close the window when the loop is done
 window.close()
