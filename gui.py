@@ -160,7 +160,7 @@ while True:
                 file.write("{:<10} {:<15} {:<25} {:<15} {:<15} {:<15} \n".format(*row))  # Left-align with specific widths
             file.write(f"\nTotal Price: {total_price}")
         
-        
+        # Enter code for sending the text file as an email to a recipient.
         
         break
     
@@ -171,11 +171,3 @@ while True:
 
 # Close the window when the loop is done
 window.close()
-
-
-
-# formatting a table for a text file.
-"""
-["Grocery", "Name", "Brand", "Price / Kg", "Amount [Kg]", "Price [€]"]
-
-"""

@@ -1,4 +1,5 @@
 Grocery    Name            Brand                     Price / Kg      Amount [Kg]     Price [€]       
-apple      Red Delicious   Pure Apple Farms          2.99            3.0             8.97            
+apple      Fuji            Apple Harvest             3.49            3.0             10.47           
+banana     Plantain        Tropical Choice           1.99            3.0             5.97            
 
-Total Price: 8.97
+Total Price: 16.44
