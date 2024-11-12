@@ -74,16 +74,19 @@ def create_shopping_list() -> list:
             window.close()
 
             choice = int(event[-1])
+            
+            
 
-            amount = float(
-                psg.popup_get_text(f"How much {grocery} do you want? (in Kg)")
-            )
-            price = amount * grocery_list[choice][2]
-            grocery_list = list(grocery_list[choice])
-            grocery_list.append(amount)
-            grocery_list.append(price)
-            grocery_list.insert(0, grocery)
-            shopping_list.append(grocery_list)
+            amount = psg.popup_get_text(f"How much {grocery} do you want? (in Kg)")
+            
+            if amount != None:
+                amount = float(amount)
+                price = amount * grocery_list[choice][2]
+                grocery_list = list(grocery_list[choice])
+                grocery_list.append(amount)
+                grocery_list.append(price)
+                grocery_list.insert(0, grocery)
+                shopping_list.append(grocery_list)
 
             return shopping_list
 
