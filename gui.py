@@ -59,6 +59,7 @@ layout = [
             background_color="black",
         )
     ],  # Right justify the column contents
+    
     # Empty row to create space before the buttons
     [psg.Text("")],  # This row can be used to add space between elements
     # Buttons
@@ -67,6 +68,13 @@ layout = [
         psg.Button("Delete grocery", font=("Arial", 12)),
         psg.Button("Exit", font=("Arial", 12)),
     ],
+    
+     # Empty rows to create space before the buttons
+    [psg.Text("")],
+    [psg.Text("")],
+    
+    [psg.Button("Save and send shopping list", font=("Arial", 12))],
+    
 ]
 
 # Create the window with the screen width
@@ -142,3 +150,22 @@ while True:
 
 # Close the window when the loop is done
 window.close()
+
+
+
+# formatting a table for a text file.
+"""
+# Sample list of lists (table)
+table = [
+    ["Name", "Age", "City"],
+    ["Alice", 30, "New York"],
+    ["Bob", 25, "San Francisco"],
+    ["Charlie", 35, "London"]
+]
+
+# Writing to a text file with formatted columns
+with open("table.txt", "w") as file:
+    for row in table:
+        file.write("{:<10} {:<5} {:<15}\n".format(*row))  # Left-align with specific widths
+
+"""
