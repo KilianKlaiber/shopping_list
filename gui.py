@@ -148,7 +148,13 @@ while True:
     
     if event == "Save and send shopping list":
         # Writing to a text file with formatted columns
-        with open("table.txt", "w") as file:
+        
+        
+        shopping_name = psg.popup_get_text("Name your shopping list", title=" Name")
+        if shopping_name == None:
+            shopping_name = "Shopping List"
+        
+        with open(f"lists/{shopping_name}.txt", "w") as file:
             shopping_list.insert(0,headings)
             for row in shopping_list:
                 file.write("{:<10} {:<15} {:<25} {:<15} {:<15} {:<15} \n".format(*row))  # Left-align with specific widths
