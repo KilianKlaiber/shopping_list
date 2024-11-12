@@ -1,6 +1,6 @@
 import PySimpleGUI as psg
 import shopping
-
+import articial_intelligence
 
 from screeninfo import get_monitors
 
@@ -64,6 +64,7 @@ layout = [
     # Buttons
     [
         psg.Button("Add grocery", font=("Arial", 12)),
+        psg.Button("Delete grocery", font=("Arial", 12)),
         psg.Button("Exit", font=("Arial", 12)),
     ],
 ]
@@ -97,18 +98,47 @@ while True:
                 total_price += item[5]
 
             total_price = round(total_price, 2)
+    
+    if event == "Delete grocery":
+        grocery = psg.popup_get_text("What do you want to delete?", title=" Delete grocery")
+        
+        groceries = []
+        
+        for item in shopping_list:
+            groceries.append(item[0])
+        
+        if grocery in groceries:
+            index = groceries.index(grocery)
+            shopping_list.pop(index)
+        else:
+            phrase, guess =  articial_intelligence.guess_grocery(groceries, grocery)
+            question = psg.popup_yes_no(phrase)
+            
+            if question == "Yes":
+                if guess in groceries:
+                    index = groceries.index(guess)
+                    shopping_list.pop(index)
+        
+        total_price = 0
+        for item in shopping_list:
+            total_price += item[5]
+
+        total_price = round(total_price, 2)
+        
+        print("grocery", grocery)
+        print("shopping list: ", shopping_list)
 
     # If the user closes the window or clicks "Exit", exit the loop
     if event == psg.WINDOW_CLOSED or event == "Exit":
         break
 
-    if shopping_list != []:
+    #if shopping_list != []:
         # Update the window with the new data
-        window["shopping_table"].update(shopping_list)
+    window["shopping_table"].update(shopping_list)
 
-    if total_price != 0:
+    #if total_price != 0:
         # Update the total price display
-        window["total_price_text"].update(f"{total_price} €")  # Format as currency
+    window["total_price_text"].update(f"{total_price} €")  # Format as currency
 
 # Close the window when the loop is done
 window.close()

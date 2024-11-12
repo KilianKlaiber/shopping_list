@@ -1,5 +1,6 @@
 import database
 import PySimpleGUI as psg
+import articial_intelligence
 
 
 def main():
@@ -24,20 +25,29 @@ def create_shopping_list() -> list:
         groceries = database.get_availabe_groceries()
 
         if grocery not in groceries and grocery != None:
+            
+            guess_stentence, guess = articial_intelligence.guess_grocery(groceries, grocery)
+            
+            result = psg.popup_yes_no(guess_stentence)
+            
+            if result != "Yes":                
+                decision = psg.popup_yes_no(
+                    f"We do not have {grocery}\n Would you like something else?",
+                    title="What Else?",
+                )
+                decision = decision.lower()
 
-            decision = psg.popup_yes_no(
-                f"We do not have {grocery}\n Would you like something else?",
-                title="What Else?",
-            )
-            decision = decision.lower()
+                if decision == "no":
+                    print("So long!")
+                    return shopping_list
+                else:
+                    decision = "yes"
+            
+            if result == "Yes":
+                grocery = guess
+                print(grocery)
 
-            if decision == "no":
-                print("So long!")
-                return shopping_list
-            else:
-                decision = "yes"
-
-        elif grocery != None:
+        if grocery != None:
             grocery_list = get_grocery(grocery)
 
             # Display Groceries in pop up window:

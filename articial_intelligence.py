@@ -4,15 +4,15 @@ import database
 
 
 def main():
-
-    values = guess_grocery("granny smith")
+    groceries = database.get_availabe_groceries()
+    values = guess_grocery(groceries, term="Brie")
 
     print(values)
 
 
-def guess_grocery(term: str) -> tuple[str]:
+def guess_grocery(groceries: str, term: str) -> tuple[str]:
 
-    groceries = database.get_availabe_groceries()
+    
 
     client = Groq(
         api_key=os.getenv("API_KEY"),
