@@ -147,7 +147,8 @@ while True:
     if event == "Save and send shopping list":
         # Writing to a text file with formatted columns
 
-        shopping_name = psg.popup_get_text("Name your shopping list", title=" Name")
+        shopping_name = psg.popup_get_text("Name your shopping list", title=" Shopping Name")
+        email_address = psg.popup_get_text("Enter your email address", title=" Email")
         if shopping_name == None:
             shopping_name = "Shopping List"
 
@@ -163,7 +164,7 @@ while True:
             content = file.read()
 
         email = message.create_message(
-            "kilianklaiber@gmail.com", content, shopping_name
+            email_address, content, shopping_name
         )
 
         message.send_message(email)
