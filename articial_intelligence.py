@@ -12,8 +12,6 @@ def main():
 
 def guess_grocery(groceries: str, term: str) -> tuple[str]:
 
-    
-
     client = Groq(
         api_key=os.getenv("API_KEY"),
     )
