@@ -156,7 +156,7 @@ while True:
             shopping_list.insert(0, headings)
             for row in shopping_list:
                 file.write(
-                    "{:<10} {:<15} {:<25} {:<15} {:<15} {:<15} \n".format(*row)
+                    "{:<10} {:<20} {:<30} {:<15} {:<15} {:<15} \n".format(*row)
                 )  # Left-align with specific widths
             file.write(f"\nTotal Price: {total_price}")
 
@@ -171,7 +171,8 @@ while True:
 
         # Enter code for sending the text file as an email to a recipient.
 
-        break
+        shopping_list = []
+        total_price = 0
 
     # If the user closes the window or clicks "Exit", exit the loop
     if event == psg.WINDOW_CLOSED or event == "Exit":

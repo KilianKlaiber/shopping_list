@@ -38,14 +38,13 @@ def create_shopping_list() -> list:
                 decision = decision.lower()
 
                 if decision == "no":
-                    print("So long!")
+                    grocery = None
                     return shopping_list
                 else:
                     decision = "yes"
             
             if result == "Yes":
                 grocery = guess
-                print(grocery)
 
         if grocery != None:
             grocery_list = get_grocery(grocery)
@@ -96,7 +95,9 @@ def create_shopping_list() -> list:
 
             if amount != None:
                 amount = float(amount)
+                amount = round(amount,3)
                 price = amount * grocery_list[choice][2]
+                price = round(price,2)
                 grocery_list = list(grocery_list[choice])
                 grocery_list.append(amount)
                 grocery_list.append(price)
