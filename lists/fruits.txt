@@ -1,5 +1,0 @@
-Grocery    Name            Brand                     Price / Kg      Amount [Kg]     Price [€]       
-apple      Fuji            Apple Harvest             3.49            3.0             10.47           
-banana     Plantain        Tropical Choice           1.99            3.0             5.97            
-
-Total Price: 16.44

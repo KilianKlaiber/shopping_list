@@ -13,7 +13,7 @@ monitor_height = primary_monitor.height
 
 # Define the layout of the window
 
-headings = ["Grocery", "Name", "Brand", "Price / Kg", "Amount [Kg]", "Price [€]"]
+headings = ["Grocery", "Name", "Brand", "Price/Kg", "Amount [Kg]", "Price [€]"]
 
 # Define the layout with a styled table and the total price display right below it
 layout = [
