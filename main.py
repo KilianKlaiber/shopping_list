@@ -112,13 +112,17 @@ while True:
 
         for item in shopping_list:
             groceries.append(item[0])
-
+            
         if grocery in groceries:
             index = groceries.index(grocery)
             shopping_list.pop(index)
         else:
-            phrase, guess = articial_intelligence.guess_grocery(groceries, grocery)
-            question = psg.popup_yes_no(phrase)
+            if grocery != None:
+
+                phrase, guess = articial_intelligence.guess_grocery(groceries, grocery)
+                question = psg.popup_yes_no(phrase)
+            else:
+                question = None
 
             if question == "Yes":
                 if guess in groceries:
