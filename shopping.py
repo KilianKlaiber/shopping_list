@@ -45,6 +45,8 @@ def create_shopping_list() -> list:
             
             if result == "Yes":
                 grocery = guess
+            else:
+                grocery == None
 
         if grocery != None:
             grocery_list = get_grocery(grocery)
