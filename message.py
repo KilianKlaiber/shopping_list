@@ -12,11 +12,11 @@ def main():
     send_message(my_message)
 
 
-def send_message(message) -> None:
-    """Connect to imap server
+def send_message(message: str) -> None:
+    """Send Email-Message
 
-    Returns:
-        object: connection to imap server
+    Args:
+        message (str): String representing the text of the message.
     """
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as connection:
